@@ -18,6 +18,10 @@ class Knn_test(object):
                   print("path none existent")
                   return None
       def processImages(self,images):
+            '''
+            this fuction flattens the image, and turns it into a float32 to be feed
+            into KNN network
+            '''
             flatten = images.reshape((-1,3))
             return np.float32(flatten)
       def knn_train(self,flatten,epoch=10,k=2,episilon=1.0, show = False):
@@ -37,7 +41,7 @@ class Knn_test(object):
             labels_reshape = labels.reshape(img.shape[0], img.shape[1])
             if show:
                   plt.imshow(segmented_data, "gray")
-            return segmented_data, labels_reshape
+            return segmented_data, labels_reshape,centers
       def getMask(self,img,labels_reshape, cluster = 0, show=False):
             '''
             this function creates a mask.
@@ -48,11 +52,3 @@ class Knn_test(object):
                   plt.figure(figsize=(10,20))
                   plt.imshow(mask_image, cmap="gray")
             return mask_image
-            
-
-kt = Knn_test("data/before_got.jpg")
-img = kt.getImages()
-flatten_img = kt.processImages(img)
-segmented_data,labels_reshape = kt.knn_train(flatten_img,k=5, show=True)
-mask = kt.getMask(img,labels_reshape,3,True)
-   
